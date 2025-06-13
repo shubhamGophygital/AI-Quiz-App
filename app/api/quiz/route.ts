@@ -1,15 +1,9 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { Question } from "@/types/quiz";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-
-type Question = {
-  question: string;
-  type: string;
-  options: string[];
-  answer: string;
-};
 
 type QuizResponse = {
   questions: Question[];
@@ -20,10 +14,10 @@ export async function POST(req: Request) {
 
   const prompt = `Generate ${count} ${difficulty} ${
     type === "mcq" ? "multiple choice" : "typed answer"
-  } questions on "${topic}". Return ONLY a valid JSON object like this (do NOT include triple backticks):
+  } questions on "${topic}". Return ONLY a valid JSON object like this:
   {
     questions: [
-      { question: '...', type: 'mcq', options: ['a','b','c','d'], answer: 'b' }
+      { question: '...', type: 'mcq', options: ['a:option_1','b:option_2','c:option_3','d:option_4'], answer: 'b' }
     ]
   }`;
   console.log("prompt : ", prompt);

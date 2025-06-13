@@ -7,11 +7,13 @@ export async function POST(req: Request) {
   const { userId, topic, questions, answers } = await req.json();
 
   let score = 0;
-  questions.forEach((q: any, i: number) => {
-    if (q.answer?.toLowerCase?.() === answers[i]?.toLowerCase?.()) {
-      score++;
-    }
-  });
+  if (questions?.[0]?.type === "mcq") {
+    questions.forEach((q: any, i: number) => {
+      if (q.answer?.toLowerCase?.() === answers[i]?.toLowerCase?.()) {
+        score++;
+      }
+    });
+  }
 
   // await Submission.create({
   //   userId,
