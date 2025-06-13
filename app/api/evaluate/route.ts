@@ -1,9 +1,9 @@
 import { connectDB } from "@/lib/mongodb";
-import Submission from "@/models/Submission";
+// import Submission from "@/models/Submission";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  await connectDB();
+  // await connectDB();
   const { userId, topic, questions, answers } = await req.json();
 
   let score = 0;
@@ -13,13 +13,13 @@ export async function POST(req: Request) {
     }
   });
 
-  await Submission.create({
-    userId,
-    topic,
-    questions,
-    answers,
-    score,
-  });
+  // await Submission.create({
+  //   userId,
+  //   topic,
+  //   questions,
+  //   answers,
+  //   score,
+  // });
 
   return NextResponse.json({ success: true, score });
 }
